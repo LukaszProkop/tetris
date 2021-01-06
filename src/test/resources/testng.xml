@@ -8,7 +8,7 @@
     <test name="CompleteTests">
         <groups>
             <run>
-                <include name="Block"/>
+<!--                <include name="Block"/>-->
                 <include name="IBlock"/>
             </run>
         </groups>

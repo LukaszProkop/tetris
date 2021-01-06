@@ -50,7 +50,7 @@ public class BlockFeedTest {
      *                    ▼ ▼ ▼ ▼
      *                    ▼ ▼ ▼ ▼
      */
-    @Test
+    @Test(groups = "IBlock")
     public void shallContainIBlock() throws IllegalAccessException {
         //given
         List<Supplier<Block>> feedList = getBlocksList();
@@ -64,7 +64,7 @@ public class BlockFeedTest {
         assertTrue(containsLBlock);
     }
 
-    @Test
+    @Test(groups = "IBlock")
     public void shallContainOnlyOneIBlock() throws IllegalAccessException {
         //given
         List<Supplier<Block>> feedList = getBlocksList();
@@ -82,6 +82,10 @@ public class BlockFeedTest {
     private static List getBlocksList() throws IllegalAccessException {
         Field[] fields = BlockFeed.class.getDeclaredFields();
         Arrays.stream(fields).forEach(field -> field.setAccessible(true));
-        return (List) fields[1].get(new BlockFeed());
+        return (List) Arrays.stream(fields)
+                .filter(field -> field.toString().contains("blocks"))
+                .findFirst()
+                .orElse(fields[1])
+                .get(new BlockFeed());
     }
 }

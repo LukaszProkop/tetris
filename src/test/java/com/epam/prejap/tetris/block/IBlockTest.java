@@ -39,7 +39,8 @@ public class IBlockTest {
         byte[][] iBlock = getIBlock();
 
         //when
-        Block block = new Block(iBlock) {};
+        Block block = new Block(iBlock) {
+        };
         byte[][] actual = block.image;
 
         //then
@@ -50,7 +51,11 @@ public class IBlockTest {
     private static byte[][] getIBlock() throws IllegalAccessException {
         Field[] fields = IBlock.class.getDeclaredFields();
         Arrays.stream(fields).forEach(field -> field.setAccessible(true));
-        return (byte[][]) fields[0].get(new IBlock());
+        return (byte[][]) Arrays.stream(fields)
+                .filter(field -> field.toString().contains("IMAGE"))
+                .findFirst()
+                .orElse(fields[0])
+                .get(new IBlock());
     }
 
     @DataProvider
@@ -70,7 +75,7 @@ public class IBlockTest {
     }
 
     @DataProvider
-    public static Object[] iBlockShape(){
+    public static Object[] iBlockShape() {
         byte[][] iBlock = {{1}, {1}, {1}, {1}};
         return new Object[]{iBlock};
     }
