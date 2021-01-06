@@ -7,8 +7,9 @@ package com.epam.prejap.tetris.block;
  * implements static 2d array in order to create required "I" shape block
  * </p></div>
  * <br>
- * @see Block
+ *
  * @author Łukasz Prokop
+ * @see Block
  */
 final class IBlock extends Block {
 
