@@ -9,7 +9,6 @@
         <groups>
             <run>
                 <include name="Block"/>
-                <include name="IBlock"/>
                 <include name="Player"/>
             </run>
         </groups>

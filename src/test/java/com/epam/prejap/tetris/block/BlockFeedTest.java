@@ -2,8 +2,6 @@ package com.epam.prejap.tetris.block;
 
 import org.testng.annotations.Test;
 
-import java.lang.reflect.Field;
-import java.util.Arrays;
 import java.util.List;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
@@ -45,15 +43,9 @@ public class BlockFeedTest {
         assertEquals(blocks.size(), 1);
     }
 
-    /**
-     * Another way to implement above LBlock tests for IBlock
-     *                    ▼ ▼ ▼ ▼
-     *                    ▼ ▼ ▼ ▼
-     */
-    @Test(groups = "IBlock")
-    public void shallContainIBlock() throws IllegalAccessException {
+    public void shallContainIBlock() {
         //given
-        List<Supplier<Block>> feedList = getBlocksList();
+        List<Supplier<Block>> feedList = new BlockFeed().blocks();
 
         //when
         boolean containsLBlock = feedList.stream()
@@ -64,13 +56,12 @@ public class BlockFeedTest {
         assertTrue(containsLBlock);
     }
 
-    @Test(groups = "IBlock")
-    public void shallContainOnlyOneIBlock() throws IllegalAccessException {
+    public void shallContainOnlyOneIBlock() {
         //given
-        List<Supplier<Block>> feedList = getBlocksList();
+        List<Supplier<Block>> feedList = new BlockFeed().blocks();
 
         //when
-        int actual = (int) feedList.stream()
+        long actual = feedList.stream()
                 .map(Supplier::get)
                 .filter(block -> block instanceof IBlock)
                 .count();
@@ -79,13 +70,4 @@ public class BlockFeedTest {
         assertEquals(actual, 1);
     }
 
-    private static List getBlocksList() throws IllegalAccessException {
-        Field[] fields = BlockFeed.class.getDeclaredFields();
-        Arrays.stream(fields).forEach(field -> field.setAccessible(true));
-        return (List) Arrays.stream(fields)
-                .filter(field -> field.toString().contains("blocks"))
-                .findFirst()
-                .orElse(fields[1])
-                .get(new BlockFeed());
-    }
 }
