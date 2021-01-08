@@ -21,4 +21,5 @@ final class IBlock extends Block {
     IBlock() {
         super(IMAGE);
     }
+
 }
